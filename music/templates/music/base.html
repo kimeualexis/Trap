@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="{% static 'music/css/style.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'music/style.css' %}"/>
 </head>
 
 <body>
@@ -21,14 +21,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'music:index' %}">Trap</a>
+      <a class="navbar-brand" href="{% url 'music:index' %}" style="color: deepskyblue;">Trap</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="{% url 'music:index' %}">Home <span class="sr-only">(current)</span></a></li>
-        <li><a href="#"><i class="fas fa-headphones"></i> Albums</a></li>
+          <li class="active"><a href="{% url 'music:index' %}" style="color: crimson;"><b>Home</b> <span class="sr-only">(current)</span></a></li>
+          <li><a href="#" style="color: teal;"><i class="fas fa-headphones"></i><b>Albums</b></a></li>
       </ul>
 
       <form class="navbar-form navbar-left">
@@ -38,8 +38,8 @@
         <button type="submit" class="btn btn-info">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{% url 'music:create-album' %}"><i class="fas fa-plus-square"></i> Add Album</a></li>
-        <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          <li><a href="{% url 'music:create-album' %}" style="color: teal;"><i class="fas fa-plus-square"></i> <b>Add Album</b></a></li>
+          <li><a href="#" style="color: crimson;"><i class="fas fa-sign-out-alt"></i> <b>Logout</b></a>
 
       </ul>
     </div><!-- /.navbar-collapse -->

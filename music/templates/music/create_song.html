@@ -1,0 +1,34 @@
+{% extends 'music/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}New song{% endblock %}
+
+{% block content %}
+    <div class="container">
+    <div class="row">
+    <div class="col-sm-1"></div>
+        <div class="col-sm-5">
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <h3 class="text-primary text-capitalize">{% if object %}Update {{ song.song_name }}{% else %}new song{% endif %}</h3>
+                    <hr>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-info">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-5">
+            <div class="panel panel-info panel-body" style="height: {% if object %}53.5%{% else %}47.5%;{% endif %}">
+            <img src="{% static 'music/images/logo.jpg' %}" class="img img-rounded" alt="" style="width: 100%; height: 100%;">
+
+        </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
