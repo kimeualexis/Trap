@@ -45,7 +45,11 @@ def create_song(request, album_id):
         song.album = album
         song.song_audio = request.FILES['song_audio']
         song.save()
-        return render(request, 'music/detail.html', {'album': album})
+        context = {
+            'album': album,
+            'message': 'Song Created Successfully!'
+        }
+        return render(request, 'music/detail.html', context)
     return render(request, 'music/create_song.html', {'form': form})
 
 

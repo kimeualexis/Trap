@@ -30,7 +30,9 @@
                 <h4 class="text-info text-capitalize"><b>{{ album.song_set.count }}&nbsp;songs</b> </h4>
 
             {% if message %}
-            <h4 class="text-danger text-center">{{ message }}</h4>
+                <div class="alert alert-success">
+                     <h4 class="text-danger text-center">{{ message }}</h4>
+                </div>
             {% endif %}
 
                 <hr>
