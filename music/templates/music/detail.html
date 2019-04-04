@@ -9,7 +9,7 @@
         <div class="col-sm-3">
         <div class="panel panel-default">
             <div class="panel-body" style="background-color: gainsboro;">
-                <img src="{{ album.album_cover.url }}" class="img img-responsive" alt="" style="height: 200px; width: 80%;">
+                <img src="{{ album.album_cover.url }}" class="img img-responsive img-thumbnail" alt="" style="height: 200px; width: 80%;">
                 <div class="caption">
                     <h4 style="color: #000;">{{ album.album_name }}<small style="float: right; color: cadetblue; font-size: 14px;">{{ album.artist_name }}</small></h4>
                     <h5 style="color: darkslategray;">{{ album.album_genre }}</h5>
@@ -23,11 +23,11 @@
         <div class="col-sm-9">
         <ul class="nav nav-pills">
             <li class="active"><a href=""> Songs</a></li>
-            <li><a href="{% url 'music:create-song' album.id %}">Add song</a> </li>
+            <li class="text-capitalize"><a href="{% url 'music:create-song' album.id %}"><b>add song</b></a> </li>
         </ul>
         <div class="panel panel-info" style="margin: 3px; background-color: whitesmoke;">
             <div class="panel-body">
-            <h3 class="text-info">All Songs </h3>
+                <h4 class="text-info text-capitalize"><b>all songs</b> </h4>
 
             {% if message %}
             <h4 class="text-danger text-center">{{ message }}</h4>
