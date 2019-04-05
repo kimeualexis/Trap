@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from . models import Album, Song
 from .forms import AlbumForm, SongForm, UserForm
 from django.views.generic import UpdateView
