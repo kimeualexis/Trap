@@ -1,7 +1,7 @@
 {% extends 'music/base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
-{% block title %}New song{% endblock %}
+{% block title %}{% if object %}Update song{% else %}New song{% endif %}{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -13,6 +13,11 @@
                     <h3 class="text-primary text-capitalize">{% if object %}Update {{ song.song_name }}{% else %}new song{% endif %}</h3>
                     <hr>
                     <form method="post" enctype="multipart/form-data">
+                        {% if message %}
+                            <div class="alert alert-primary">
+                            <h4 class="text-danger">{{ message }}</h4>
+                            </div>
+                        {% endif %}
                         {% csrf_token %}
                         {{ form|crispy }}
                         <div class="form-group">

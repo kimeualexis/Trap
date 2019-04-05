@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from . models import Album, Song
-from .forms import AlbumForm, SongForm
+from .forms import AlbumForm, SongForm, UserForm
 from django.views.generic import UpdateView
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required(login_url='music:login')
 def index(request):
     albums = Album.objects.all()
     return render(request, 'music/index.html', {'albums': albums})
@@ -18,6 +21,15 @@ def detail(request, album_id):
 def create_album(request):
     form = AlbumForm(request.POST or None, request.FILES or None)
     if form.is_valid():
+        albums = Album.objects.all()
+        for album in albums:
+            if album.album_name == form.cleaned_data.get('album_name'):
+                context = {
+                    'form': form,
+                    'message': 'Album Already Added!'
+                }
+                return render(request, 'music/create_album.html', context)
+
         album = form.save(commit=False)
         album.album_cover = request.FILES['album_cover']
         album.save()
@@ -41,6 +53,14 @@ def create_song(request, album_id):
     form = SongForm(request.POST or None, request.FILES or None)
     album = get_object_or_404(Album, pk=album_id)
     if form.is_valid():
+        for s in album.song_set.all():
+            if s.song_name == form.cleaned_data.get('song_name'):
+                context = {
+                    'form': form,
+                    'message': 'You Already Added That Song!'
+                }
+                return render(request, 'music/create_song.html', context)
+
         song = form.save(commit=False)
         song.album = album
         song.song_audio = request.FILES['song_audio']
@@ -68,6 +88,44 @@ def delete_song(request, album_id, song_id):
         'message': 'Song Deleted Successfully!'
     }
     return render(request, 'music/detail.html', context)
+
+
+def signup(request):
+    form = UserForm(request.POST or None)
+    if form.is_valid():
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
+        user = form.save(commit=False)
+        user.set_password(password)
+        user.save()
+        user = authenticate(email=email, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return redirect('music:index')
+    return render(request, 'registration/signup.html', {'form': form})
+
+
+def signin(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(email=email, password=password)
+        #if user.is_active:
+        login(request, user)
+        return redirect('music:index')
+       # return render(request, 'registration/login.html', {'message': 'Account Deactivated!'})
+    return render(request, 'registration/login.html')
+
+
+def logout_user(request):
+    logout(request)
+    context = {
+        'message': 'Logged Out!'
+    }
+    return render(request, 'registration/login.html', context)
+
+
 
 
 
