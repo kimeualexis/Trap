@@ -93,12 +93,12 @@ def delete_song(request, album_id, song_id):
 def signup(request):
     form = UserForm(request.POST or None)
     if form.is_valid():
-        email = form.cleaned_data['email']
+        username = form.cleaned_data['username']
         password = form.cleaned_data['password']
         user = form.save(commit=False)
         user.set_password(password)
         user.save()
-        user = authenticate(email=email, password=password)
+        user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
                 login(request, user)
@@ -108,22 +108,19 @@ def signup(request):
 
 def signin(request):
     if request.method == 'POST':
-        email = request.POST['email']
+        username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(email=email, password=password)
-        #if user.is_active:
-        login(request, user)
-        return redirect('music:index')
-       # return render(request, 'registration/login.html', {'message': 'Account Deactivated!'})
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return redirect('music:index')
     return render(request, 'registration/login.html')
 
 
 def logout_user(request):
     logout(request)
-    context = {
-        'message': 'Logged Out!'
-    }
-    return render(request, 'registration/login.html', context)
+    return redirect('music:login')
 
 
 

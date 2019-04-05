@@ -1,0 +1,23 @@
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+
+{% load static %}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link href='https://fonts.googleapis.com/css?family=Kaushan Script' rel='stylesheet' type='text/css'>
+<link rel="shortcut icon" type="image/png" href="{%  static 'logo.jpg' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'music/style.css' %}"/>
+</head>
+
+<body>
+<div class="container">
+ <div class="page-header">
+     <h3 class="text-center text-primary" style="font-family: Kaushan Script, cursive; font-size: 45px;"><b><i class="fas fa-headphones-alt"></i>&nbsp;Welcome To Trap Trap&nbsp;&nbsp;<i class="fas fa-headphones-alt"></i></b></h3>
+     <h4 class="text-center text-info" style="font-family: Purisa;"><b>When words leave off music begins.</b></h4>
+ </div>
+</div>
+{% block content %}{% endblock %}
+</body>
+</html>
