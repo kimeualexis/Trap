@@ -2,7 +2,7 @@
 {% block title %}Trap{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="albums-container container-fluid">
     <div class="row">
         {% if albums %}
             {% for album in albums %}
@@ -16,7 +16,7 @@
                         <h5 style="font-family: Garuda; color: teal;"><i class="fas fa-user-circle"></i>&nbsp;{{ album.artist_name }}<small style="float: right; color: cadetblue; font-size: 14px; font-family: FreeSerif;"><i class="fas fa-headphones"></i>&nbsp;{{ album.album_genre }}</small> </h5>
                         <a href="{% url 'music:album-update' album.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i> </a>
                         <a href="{% url 'music:album-delete' album.id %}" class="btn btn-danger btn-sm" style="float: right;"><i class="fas fa-trash"></i> </a>
-                        <a href="" class="btn btn-success btn-sm"><i class="fas fa-heart"></i> </a>
+                        <a href="{% url 'music:album-favorite' album.id %}" class="btn btn-secondary btn-sm btn-favorite" style="border: 1px solid slategray;"><span class="glyphicon glyphicon-star {% if album.is_favorite %}active{% endif %}"></span> </a>
                     </div>
                 </div>
                 </div>

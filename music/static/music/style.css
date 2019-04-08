@@ -10,3 +10,11 @@ body {
     background: white url("../bg.jpg");
 }
 
+.glyphicon-star {
+    color: #CCCCCC;
+    font-size: 16px;
+}
+
+.glyphicon-star.active {
+    color: #FDB230;
+}

@@ -5,25 +5,21 @@ from django.views.generic import UpdateView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.http import JsonResponse
 
 
 # Create your views here.
 @login_required(login_url='music:login')
 def index(request):
     albums = Album.objects.filter(user=request.user)
-    song_results = Song.objects.all()
     query = request.GET.get("q")
     if query:
         albums = albums.filter(
             Q(album_name__icontains=query) |
             Q(artist_name__icontains=query)
         ).distinct()
-        song_results = song_results.filter(
-            Q(song_name__icontains=query)
-        ).distinct()
         return render(request, 'music/index.html', {
             'albums': albums,
-            'songs': song_results,
         })
     return render(request, 'music/index.html', {'albums': albums})
 
@@ -137,6 +133,33 @@ def signin(request):
 def logout_user(request):
     logout(request)
     return redirect('music:login')
+
+
+def favorite_album(request, album_id):
+    album = get_object_or_404(Album, pk=album_id)
+    try:
+        if album.is_favorite:
+            album.is_favorite = False
+        else:
+            album.is_favorite = True
+        album.save()
+        return redirect('music:index')
+    except Album.DoesNotExist():
+        return redirect('music:index')
+
+
+def favorite_song(request, song_id):
+    song = get_object_or_404(Song, pk=song_id)
+    try:
+        if song.is_favorite:
+            song.is_favorite = False
+        else:
+            song.is_favorite = True
+        song.save()
+    except (KeyError, Song.DoesNotExist):
+        return JsonResponse({'success': False})
+    else:
+        return JsonResponse({'success': True})
 
 
 
