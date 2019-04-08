@@ -4,12 +4,27 @@ from .forms import AlbumForm, SongForm, UserForm
 from django.views.generic import UpdateView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 # Create your views here.
 @login_required(login_url='music:login')
 def index(request):
-    albums = Album.objects.all()
+    albums = Album.objects.filter(user=request.user)
+    song_results = Song.objects.all()
+    query = request.GET.get("q")
+    if query:
+        albums = albums.filter(
+            Q(album_name__icontains=query) |
+            Q(artist_name__icontains=query)
+        ).distinct()
+        song_results = song_results.filter(
+            Q(song_name__icontains=query)
+        ).distinct()
+        return render(request, 'music/index.html', {
+            'albums': albums,
+            'songs': song_results,
+        })
     return render(request, 'music/index.html', {'albums': albums})
 
 
@@ -21,7 +36,7 @@ def detail(request, album_id):
 def create_album(request):
     form = AlbumForm(request.POST or None, request.FILES or None)
     if form.is_valid():
-        albums = Album.objects.all()
+        albums = Album.objects.filter(user=request.user)
         for album in albums:
             if album.album_name == form.cleaned_data.get('album_name'):
                 context = {
@@ -32,6 +47,7 @@ def create_album(request):
 
         album = form.save(commit=False)
         album.album_cover = request.FILES['album_cover']
+        album.user = request.user
         album.save()
         return render(request, 'music/detail.html', {'album': album})
     return render(request, 'music/create_album.html', {'form': form})
