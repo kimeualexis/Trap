@@ -17,6 +17,6 @@ urlpatterns = [
     path('(?P<album_id>[0-9]+)/delete-song/(?P<song_id>[0-9]+)/',
          views.delete_song, name='song-delete'),
     path('(?P<album_id>[0-9]+)/favorite-album', views.favorite_album, name='album-favorite'),
-    path('(?P<song_id>[0-9]+)/favorite-song/', views.favorite_song, name='song-favorite'),
+    path('(?P<album_id>[0-9]+)/favorite-song/(?P<song_id>[0-9]+)', views.favorite_song, name='song-favorite'),
 ]
 

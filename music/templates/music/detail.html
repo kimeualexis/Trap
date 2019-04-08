@@ -51,7 +51,7 @@
                        <td>{{ song.song_name }}</td>
                        <td><a href="{{ song.song_audio.url }}"
                               class="btn btn-success btn-sm" target="_blank"><i class="fas fa-play"></i> </a> </td>
-                       <td><a href="{% url 'music:song-favorite' song.id %}" class="btn btn-secondary btn-sm btn-favorite" style="border: 1px solid slategray;"><span class="glyphicon glyphicon-star {% if song.is_favorite %} active{% endif %}"></span> </a> </td>
+                       <td><a href="{% url 'music:song-favorite' album.id song.id %}" class="btn btn-secondary btn-sm btn-favorite" style="border: 1px solid slategray;"><span class="glyphicon glyphicon-star {% if song.is_favorite %} active{% endif %}"></span> </a> </td>
                        <td><a href="{% url 'music:song-update' song.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i> </a>
                        <a href="{% url 'music:song-delete' album.id song.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> </a>
                        </td>

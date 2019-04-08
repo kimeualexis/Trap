@@ -148,18 +148,19 @@ def favorite_album(request, album_id):
         return redirect('music:index')
 
 
-def favorite_song(request, song_id):
+def favorite_song(request, album_id, song_id):
     song = get_object_or_404(Song, pk=song_id)
+    album = get_object_or_404(Album, pk=album_id)
     try:
         if song.is_favorite:
             song.is_favorite = False
         else:
             song.is_favorite = True
         song.save()
-    except (KeyError, Song.DoesNotExist):
-        return JsonResponse({'success': False})
+    except Song.DoesNotExist:
+        return render(request, 'music/detail.html', {'album': album})
     else:
-        return JsonResponse({'success': True})
+        return render(request, 'music/detail.html', {'album': album})
 
 
 
